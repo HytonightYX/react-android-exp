@@ -1,12 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import * as serviceWorker from './serviceWorker'
+import injects from './store'
+import { Provider } from 'mobx-react'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { configure } from 'mobx'
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+configure({enforceActions: 'observed'})
+
+ReactDOM.render(
+	<Provider {...injects}>
+		<App/>
+	</Provider>,
+	document.getElementById('root')
+)
+
+serviceWorker.register()
