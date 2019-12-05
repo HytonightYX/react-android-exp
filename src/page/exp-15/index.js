@@ -1,22 +1,9 @@
 import React from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import './style.less'
-import { message, Collapse, Tag, Icon, Modal, Form, Input } from 'antd'
+import { message, Collapse, Tag, Icon, Modal, Form, Input, Checkbox, Button } from 'antd'
 
 const {Panel} = Collapse
-
-const SKYCON = {
-	CLEAR_DAY: '晴（白天）',
-	CLEAR_NIGHT: '晴（夜间）',
-	PARTLY_CLOUDY_DAY: '多云（白天',
-	PARTLY_CLOUDY_NIGHT: '多云（夜间',
-	CLOUDY: '阴',
-	WIND: '大风',
-	HAZE: '雾霾',
-	RAIN: '雨',
-	SNOW: '雪'
-}
 
 @Form.create()
 class Exp_15 extends React.Component {
@@ -25,19 +12,12 @@ class Exp_15 extends React.Component {
 		daily_forecast: [],
 		basic: {},
 		update: {},
-		loc: '上海',
+		loc: '杭州',
 
 		visible: false,
 		confirmLoading: false,
 	}
 
-	stringify = (ori) => {
-		return JSON.stringify(ori)
-			.replace(/({)|(})|(")/g, '')
-			.replace('max:', '最高: ')
-			.replace('min:', '最低: ')
-			.replace('avg:', '平均: ')
-	}
 
 	async componentDidMount() {
 		this.setState({loading: true})
@@ -82,12 +62,12 @@ class Exp_15 extends React.Component {
 					}
 				})
 				.finally(() => {
-				this.setState({
-					visible: false,
-					confirmLoading: false,
-					loading: false
+					this.setState({
+						visible: false,
+						confirmLoading: false,
+						loading: false
+					})
 				})
-			})
 			form.resetFields()
 		})
 	}
@@ -152,6 +132,10 @@ class Exp_15 extends React.Component {
 					}
 				</Collapse>
 
+				<div className="m-form-wrap">
+					<WrappedNormalLoginForm/>
+				</div>
+
 				<Modal
 					visible={visible}
 					onOk={this.handleOk}
@@ -172,5 +156,78 @@ class Exp_15 extends React.Component {
 		)
 	}
 }
+
+class NormalLoginForm extends React.Component {
+
+	state = {
+		baseapi: 'http://yunxi.site:8084/login2'
+	}
+
+	handleSubmit = e => {
+		e.preventDefault()
+		this.props.form.validateFields((err, values) => {
+			if (!err) {
+				console.log('Received values of form: ', values)
+
+				axios.post(this.state.baseapi, values)
+					.then(r => {
+						if (r && r.status === 200) {
+							console.log(r.data.data)
+							if (r.data.code === 200) {
+								message.success('登录成功', 0.5)
+							} else {
+								message.error('用户名或密码错误', 0.5)
+							}
+						} else {
+							message.error('网络错误', 0.5)
+						}
+					})
+					.catch(e => {
+						message.error(e.message, 0.5)
+					})
+			}
+		})
+	}
+
+	render() {
+		const {getFieldDecorator} = this.props.form
+		return (
+			<Form onSubmit={this.handleSubmit} className="login-form">
+				<Form.Item>
+					{getFieldDecorator('username', {
+						rules: [{required: true, message: 'Please input your username!'}],
+					})(
+						<Input
+							prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+							placeholder="用户名"
+						/>,
+					)}
+				</Form.Item>
+				<Form.Item>
+					{getFieldDecorator('password', {
+						rules: [{required: true, message: 'Please input your Password!'}],
+					})(
+						<Input
+							prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
+							type="password"
+							placeholder="密码"
+						/>,
+					)}
+				</Form.Item>
+				<Button type="primary" htmlType="submit" className="login-form-button">
+					Login
+				</Button>
+
+
+				<Button onClick={() => this.setState({baseapi: 'yunxi.site:8084/login2'})}>
+					resetApi
+				</Button>
+			</Form>
+
+		)
+	}
+}
+
+const WrappedNormalLoginForm = Form.create({name: 'normal_login'})(NormalLoginForm)
 
 export default Exp_15
