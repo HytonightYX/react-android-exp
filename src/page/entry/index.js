@@ -10,7 +10,7 @@ class Entry extends React.Component {
 			<div className="g-entry">
 				<Link to='/exp-8-2'><Button size="large" primary>实验8-2</Button></Link>
 				<Link to='/exp-8-3'><Button size="large" primary>实验8-3</Button></Link>
-				<Link to='/exp-8-2'><Button size="large" primary>入口</Button></Link>
+				<Link to='/exp-15'><Button size="large" primary>实验-15</Button></Link>
 			</div>
 		)
 	}
