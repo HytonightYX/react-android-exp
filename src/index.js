@@ -9,6 +9,9 @@ import { configure } from 'mobx'
 
 configure({enforceActions: 'observed'})
 
+/* polyfill: 安卓部分老版本游览器缺失 promise.prototype.finally 方法 */
+require('promise.prototype.finally').shim()
+
 ReactDOM.render(
 	<Provider {...injects}>
 		<App/>
