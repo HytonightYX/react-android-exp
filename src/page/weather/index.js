@@ -6,7 +6,7 @@ import { message, Collapse, Tag, Icon, Modal, Form, Input, Checkbox, Button } fr
 const {Panel} = Collapse
 
 @Form.create()
-class Exp_15 extends React.Component {
+class Weather extends React.Component {
 	state = {
 		loading: false,
 		daily_forecast: [],
@@ -132,10 +132,6 @@ class Exp_15 extends React.Component {
 					}
 				</Collapse>
 
-				<div className="m-form-wrap">
-					<WrappedNormalLoginForm/>
-				</div>
-
 				<Modal
 					visible={visible}
 					onOk={this.handleOk}
@@ -157,77 +153,4 @@ class Exp_15 extends React.Component {
 	}
 }
 
-class NormalLoginForm extends React.Component {
-
-	state = {
-		baseapi: 'http://yunxi.site:8084/login2'
-	}
-
-	handleSubmit = e => {
-		e.preventDefault()
-		this.props.form.validateFields((err, values) => {
-			if (!err) {
-				console.log('Received values of form: ', values)
-
-				axios.post(this.state.baseapi, values)
-					.then(r => {
-						if (r && r.status === 200) {
-							console.log(r.data.data)
-							if (r.data.code === 200) {
-								message.success('登录成功', 0.5)
-							} else {
-								message.error('用户名或密码错误', 0.5)
-							}
-						} else {
-							message.error('网络错误', 0.5)
-						}
-					})
-					.catch(e => {
-						message.error(e.message, 0.5)
-					})
-			}
-		})
-	}
-
-	render() {
-		const {getFieldDecorator} = this.props.form
-		return (
-			<Form onSubmit={this.handleSubmit} className="login-form">
-				<Form.Item>
-					{getFieldDecorator('username', {
-						rules: [{required: true, message: 'Please input your username!'}],
-					})(
-						<Input
-							prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-							placeholder="用户名"
-						/>,
-					)}
-				</Form.Item>
-				<Form.Item>
-					{getFieldDecorator('password', {
-						rules: [{required: true, message: 'Please input your Password!'}],
-					})(
-						<Input
-							prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-							type="password"
-							placeholder="密码"
-						/>,
-					)}
-				</Form.Item>
-				<Button type="primary" htmlType="submit" className="login-form-button">
-					Login
-				</Button>
-
-
-				<Button onClick={() => this.setState({baseapi: 'yunxi.site:8084/login2'})}>
-					resetApi
-				</Button>
-			</Form>
-
-		)
-	}
-}
-
-const WrappedNormalLoginForm = Form.create({name: 'normal_login'})(NormalLoginForm)
-
-export default Exp_15
+export default Weather
