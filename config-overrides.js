@@ -4,7 +4,8 @@ const {
 	addLessLoader,
 	addDecoratorsLegacy,
 	disableEsLint,
-	addWebpackAlias
+	addWebpackAlias,
+	addWebpackExternals
 } = require('customize-cra')
 
 const path = require('path')
@@ -29,4 +30,7 @@ module.exports = override(
 		'@constant': path.resolve(__dirname, 'src/constant'),
 		'@component': path.resolve(__dirname, 'src/component'),
 	}),
+	addWebpackExternals({
+		'AMap':'AMap'
+	})
 )

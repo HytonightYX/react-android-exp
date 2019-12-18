@@ -4,7 +4,7 @@ import NavWrapper from './component/NavWrapper'
 
 import Weather from './page/weather'
 import Map from './page/map'
-import Recommend from './page/recommend'
+import History from './page/history'
 import Setting from './page/setting'
 import Login from './page/login'
 
@@ -26,7 +26,7 @@ class App extends React.Component {
 									<Route exact path='/app/' component={() => <Redirect to='/app/weather'/>}/>
 									<Route exact path='/app/weather' component={Weather}/>
 									<Route exact path='/app/map' component={Map}/>
-									<Route exact path='/app/recommend' component={Recommend}/>
+									<Route exact path='/app/history' component={History}/>
 									<Route exact path='/app/setting' component={Setting}/>
 								</Switch>
 							</div>

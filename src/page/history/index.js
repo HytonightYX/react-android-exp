@@ -1,15 +1,15 @@
 import React from 'react'
 
-class Recommend extends React.Component {
+class History extends React.Component {
 
 	render() {
 		return (
 			<div className="g-recommend">
-				Recommend
+				Historyfds
 			</div>
 		)
 	}
 
 }
 
-export default Recommend
+export default History

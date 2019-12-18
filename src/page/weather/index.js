@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import './style.less'
+import qrcode from './qrcode.png'
+import { LIFE_STYLE } from '../../constant/data'
 import { message, Collapse, Tag, Icon, Modal, Form, Input, Checkbox, Button, Tabs } from 'antd'
 
 const {Panel} = Collapse
@@ -9,6 +11,7 @@ const {TabPane} = Tabs
 class Weather extends React.Component {
 	state = {
 		loading: false,
+		loadingLifeStyle: false,
 		daily_forecast: null,
 		basic: null,
 		update: null,
@@ -46,10 +49,18 @@ class Weather extends React.Component {
 			this.setState({loading: false})
 		}
 
+		const lifer = await axios.get(`https://free-api.heweather.net/s6/weather/lifestyle?location=${this.state.loc}&key=0dd213c6299e4c0ca233320dc0984ad9`)
+		console.log('生活指数', lifer.data.HeWeather6[0].lifestyle)
+		if (lifer && lifer.status === 200 && lifer.data && lifer.data.HeWeather6[0].status === 'ok') {
+
+			this.setState({
+				lifestyle: lifer.data.HeWeather6[0].lifestyle,
+			})
+		}
 	}
 
 	render() {
-		const {basic, daily_forecast, now, update} = this.state
+		const {basic, daily_forecast, now, update, lifestyle} = this.state
 		console.log(update)
 		console.log(now)
 		console.log('daily_forecast', daily_forecast)
@@ -58,7 +69,7 @@ class Weather extends React.Component {
 			<div className="g-weather">
 
 				<div className="m-weather-tabs">
-					<Tabs type="card">
+					<Tabs type="card" defaultActiveKey='2'>
 						<TabPane tab="今日" key="1">
 							<div className="m-today">
 
@@ -144,17 +155,38 @@ class Weather extends React.Component {
 									</div>
 
 								</div>
-
-
-
-
-
-
-
 							</div>
 						</TabPane>
 						<TabPane tab="推荐" key="2">
-							推荐
+							<div className="m-recommend">
+								<div className="qrcode-wrap">
+									<img src={qrcode} alt=""/>
+								</div>
+
+								<div className="life-wrap">
+									<div className="life-title">
+										生活指数
+									</div>
+
+									<div className="m-life-wrap">
+										{
+											lifestyle && lifestyle.map(item => {
+												const type = LIFE_STYLE[item.type]
+												if (type) {
+													return (
+														<div className="m-life-row" key={item.name}>
+															<div className="name">{type}<span className="brf">{item.brf}</span></div>
+															<div>
+																<span className="txt">{item.txt}</span>
+															</div>
+														</div>
+													)
+												}
+											})
+										}
+									</div>
+								</div>
+							</div>
 						</TabPane>
 					</Tabs>
 				</div>
