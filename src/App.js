@@ -1,5 +1,5 @@
 import React from 'react'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import NavWrapper from './component/NavWrapper'
 
 import Weather from './page/weather'
@@ -17,13 +17,13 @@ class App extends React.Component {
 		return (
 			<Router>
 				<div className='app-root'>
-					<Route exact path='/login' component={Login}/>
+					<Route exact path='/' component={Login}/>
 
 					<Route path='/app' render={() => (
 						<NavWrapper>
 							<div className="g-content">
 								<Switch>
-									<Route exact path='/app/' component={Weather}/>
+									<Route exact path='/app/' component={() => <Redirect to='/app/weather'/>}/>
 									<Route exact path='/app/weather' component={Weather}/>
 									<Route exact path='/app/map' component={Map}/>
 									<Route exact path='/app/recommend' component={Recommend}/>

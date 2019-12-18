@@ -12,6 +12,29 @@ class Login extends React.Component {
 		}
 	}
 
+	doLogin = () => {
+		this.props.form.validateFields(async (err, values) => {
+			if (err) {
+				return
+			}
+
+			console.log(values)
+
+			// this.props.userStore.login(values)
+			// 	.then(r => {
+			// 		if (r && r.code === 200) {
+			// 			message.success(r.msg)
+			// 		} else if (r && r.code === 301) {
+			// 			message.error(r.msg)
+			// 		}
+			// 	})
+			if (values.username === 'a' && values.password === 'a') {
+				message.success('登录成功')
+				this.props.history.push('/app')
+			}
+		})
+	}
+
 	render() {
 		const {getFieldDecorator} = this.props.form
 		return (
@@ -19,13 +42,13 @@ class Login extends React.Component {
 					{/*{this.currUser && <Redirect to='/'/>}*/}
 
 					<div className="m-tri">
-						<div className='m-title'>勤怠管理</div>
+						<div className='m-title'>天气预报</div>
 					</div>
 
 					<div className='m-login'>
 						<Form>
 							<Form.Item>
-								{getFieldDecorator('email', {
+								{getFieldDecorator('username', {
 									rules: [{required: true, message: '请输入E-mail！'}],
 									initialValue: ''
 								})(
@@ -33,19 +56,20 @@ class Login extends React.Component {
 										icon="search"
 										size='large'
 										className="input-pwd input-center"
-										placeholder="E-mail"
+										placeholder="用户名..."
 										allowClear
-										prefix={<Icon type="mail" style={{color: 'rgba(0,0,0,.25)'}}/>}
+										prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
 									/>)}
 							</Form.Item>
+
 							<Form.Item>
-								{getFieldDecorator('pwd', {
+								{getFieldDecorator('password', {
 									rules: [{required: true, message: '请输入密码！'}],
 								})(
 									<Input.Password
 										size='large'
 										className="input-pwd input-center"
-										placeholder="パスワード"
+										placeholder="密码..."
 										prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
 									/>)}
 							</Form.Item>
@@ -53,11 +77,12 @@ class Login extends React.Component {
 							<Form.Item className='no-bottom'>
 								<Button
 									type="primary"
+									size="large"
 									className="input-btn"
 									onClick={this.doLogin}
 									block
 								>
-									ログイン
+									登录
 								</Button>
 							</Form.Item>
 
@@ -66,10 +91,11 @@ class Login extends React.Component {
 							<Form.Item className='no-bottom'>
 								<Link to='/register'>
 									<Button
+										size="large"
 										className="input-btn"
 										block
 									>
-										新規登録
+										忘记密码？
 									</Button>
 								</Link>
 							</Form.Item>

@@ -3,7 +3,7 @@
 .g-weather {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  min-height: calc(100vh - 60px);
 
   .m-header {
     display: flex;
@@ -32,11 +32,6 @@
     color: #3366cc;
   }
 
-  .m-item {
-    .m-row {
-      margin-bottom: 4px;
-    }
-  }
 
   .m-form-wrap {
     display: flex;
@@ -52,4 +47,109 @@
   }
 }
 
+.m-weather-tabs {
+
+  .m-today {
+    min-height: calc(100vh - 100px);
+    background: #3d74aa;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .m-main {
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 300px;
+
+      border-bottom: #f7f7f7 1px solid;
+
+      color: #F4F4f4;
+
+      .loc {
+        font-size: 42px;
+        line-height: 42px;
+      }
+
+      .weather {
+        font-size: 18px;
+      }
+
+      .temp {
+        margin-top: 10px;
+        font-size: 80px;
+        line-height: 80px;
+      }
+    }
+
+    .m-detail {
+      min-height: calc(100vh - 420px);
+      color: #F4F4f4;
+
+      .context {
+        padding: 0 24px;
+        border-bottom: #f7f7f7 1px solid;
+      }
+
+      .data-wrap {
+        display: flex;
+        flex-direction: column;
+        padding: 5px 24px;
+
+        .m-row {
+          margin-bottom: 4px;
+          display: flex;
+          width: 100%;
+          flex-direction: row;
+          justify-content: space-between;
+          border-bottom: #f7f7f7 1px solid;
+
+          .item {
+            color: #f7f7f7;
+            min-width: 184px;
+
+            .item-title {
+            }
+
+            .item-data {
+              font-size: 32px;
+              font-weight: 300;
+            }
+          }
+        }
+
+        .no-border {
+          border: none;
+        }
+      }
+    }
+  }
+
+
+
+  .ant-tabs-card > .ant-tabs-content {
+    margin-top: -16px;
+  }
+
+  .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
+    background: #fff;
+
+  }
+
+  .ant-tabs-card > .ant-tabs-bar {
+    border-color: #fff;
+  }
+
+  .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+    border-color: #fff;
+    background: #fff;
+  }
+}
 
