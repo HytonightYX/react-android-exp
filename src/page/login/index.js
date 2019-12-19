@@ -1,14 +1,23 @@
 import React from 'react'
 import { Icon, Form, Input, Button, Divider, message } from 'antd'
 import { Link } from 'react-router-dom'
-import { Redirect } from 'react-router-dom'
 import './index.less'
+import { getUserData } from '../../util/ls-helper'
 
 class Login extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			loading: false,
+			user: null
+		}
+	}
+
+	componentDidMount() {
+		if (window.localStorage.getItem('rem') === '1') {
+			window.localStorage.setItem('login', '1')
+			message.success('自动登录成功')
+			this.props.history.push('/app')
 		}
 	}
 
@@ -18,19 +27,13 @@ class Login extends React.Component {
 				return
 			}
 
-			console.log(values)
+			const lsuser = getUserData()
 
-			// this.props.userStore.login(values)
-			// 	.then(r => {
-			// 		if (r && r.code === 200) {
-			// 			message.success(r.msg)
-			// 		} else if (r && r.code === 301) {
-			// 			message.error(r.msg)
-			// 		}
-			// 	})
-			if (values.username === 'a' && values.password === 'a') {
-				message.success('登录成功')
+			if (values.username === lsuser.username && values.password === lsuser.password) {
 				this.props.history.push('/app')
+				window.localStorage.setItem('login', '1')
+			} else {
+				message.error('用户名或密码错误，来宾账号密码均为 a')
 			}
 		})
 	}

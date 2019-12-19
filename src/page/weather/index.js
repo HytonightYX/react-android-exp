@@ -12,6 +12,8 @@ class Weather extends React.Component {
 	state = {
 		loading: false,
 		loadingLifeStyle: false,
+		confirmLoading: false,
+
 		daily_forecast: null,
 		basic: null,
 		update: null,
@@ -20,7 +22,6 @@ class Weather extends React.Component {
 		image: 'https://source.unsplash.com/900x1600/?hangzhou',
 
 		visible: false,
-		confirmLoading: false,
 	}
 
 	async componentDidMount() {
@@ -170,11 +171,11 @@ class Weather extends React.Component {
 
 									<div className="m-life-wrap">
 										{
-											lifestyle && lifestyle.map(item => {
+											lifestyle && lifestyle.map((item, index) => {
 												const type = LIFE_STYLE[item.type]
 												if (type) {
 													return (
-														<div className="m-life-row" key={item.name}>
+														<div className="m-life-row" key={index}>
 															<div className="name">{type}<span className="brf">{item.brf}</span></div>
 															<div>
 																<span className="txt">{item.txt}</span>
@@ -195,64 +196,5 @@ class Weather extends React.Component {
 		)
 	}
 }
-
-const a = () => (
-	<Collapse defaultActiveKey={['daily-0']}>
-		{
-			daily_forecast && daily_forecast.map((item, index) => (
-				<Panel header={<div>{item.date + '  '}{item.cond_txt_d}</div>} key={`daily-${index}`} className="m-item">
-					<div className="m-row">
-						<Tag color="blue" style={{minWidth: 65, textAlign: 'center'}}>气温</Tag>
-						<span>{item.tmp_min}&#176;-{item.tmp_max}&#176;</span>
-					</div>
-
-					<div className="m-row">
-						<Tag color="blue" style={{minWidth: 65, textAlign: 'center'}}>相对湿度</Tag>
-						<span>{item.hum}</span>
-					</div>
-
-					<div className="m-row">
-						<Tag color="blue" style={{minWidth: 65, textAlign: 'center'}}>风向</Tag>
-						<span>{item.wind_dir}, 风力{item.wind_sc}级</span>
-					</div>
-
-					<div className="m-row">
-						<Tag color="blue" style={{minWidth: 65, textAlign: 'center'}}>日出日落</Tag>
-						<span>日出{item.sr}, 日落{item.sr}</span>
-					</div>
-
-					<div className="m-row">
-						<Tag color="blue" style={{minWidth: 65, textAlign: 'center'}}>降水概率</Tag>
-						<span>{item.pop}%</span>
-					</div>
-
-					<div className="m-row">
-						<Tag color="blue" style={{minWidth: 60, textAlign: 'center'}}>大气压强</Tag>
-						<span>{item.pres}</span>
-					</div>
-				</Panel>
-			))
-		}
-	</Collapse>
-)
-
-const b = () => (
-	<Modal
-		visible={visible}
-		onOk={this.handleOk}
-		confirmLoading={confirmLoading}
-		onCancel={this.handleCancel}
-	>
-		<div>
-			<Form layout="vertical">
-				<Form.Item label="位置">
-					{getFieldDecorator('loc', {
-						rules: [{required: true, message: '请输入地理位置...'}],
-					})(<Input/>)}
-				</Form.Item>
-			</Form>
-		</div>
-	</Modal>
-)
 
 export default Weather

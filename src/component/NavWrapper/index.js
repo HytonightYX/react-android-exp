@@ -1,11 +1,19 @@
 import React from 'react'
-import { Icon } from 'antd'
+import { Icon, message } from 'antd'
 import { MENU_MAIN } from '../../constant/data'
 import { NavLink, withRouter } from 'react-router-dom'
 
 import './index.less'
 
-export default withRouter(({children, location}) => {
+export default withRouter((props) => {
+	const login = window.localStorage.getItem('login') === '1'
+	const {children, location} = props
+
+	if (!login) {
+		message.info('请先登录!', 2)
+		props.history.push('/')
+	}
+
 	return (
 		<div className="g-nav">
 			{children}
