@@ -7,10 +7,10 @@ class MainStore {
 	@observable
 	city = 'hangzhou'
 
-
-
 }
 
-export default {
+const main = new MainStore()
 
+export default {
+	main
 }
