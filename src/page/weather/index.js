@@ -75,7 +75,7 @@ class Weather extends React.Component {
 			<div className="g-weather">
 
 				<div className="m-weather-tabs">
-					<Tabs type="card" defaultActiveKey='2'>
+					<Tabs type="card" defaultActiveKey='1'>
 						<TabPane tab="今日" key="1">
 							<div className="m-today">
 

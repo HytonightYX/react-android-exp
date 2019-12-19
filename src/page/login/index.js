@@ -42,7 +42,6 @@ class Login extends React.Component {
 		const {getFieldDecorator} = this.props.form
 		return (
 				<div className='g-login'>
-					{/*{this.currUser && <Redirect to='/'/>}*/}
 
 					<div className="m-tri">
 						<div className='m-title'>天气预报</div>

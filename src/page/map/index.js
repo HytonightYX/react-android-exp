@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import React from 'react'
 import './style.less'
 import { getAddr } from '../../util/reg-helper'
@@ -6,7 +7,6 @@ class MapClass extends React.Component {
 
 	state = {
 		loading: true,
-		city: window.localStorage.getItem('city')
 	}
 
 	componentDidMount() {
@@ -29,16 +29,13 @@ class MapClass extends React.Component {
 					//实例化Geocoder
 					geocoder.getAddress(lnglatXY, function (status, result) {
 						if (status === 'complete' && result.info === 'OK') {
-							//获得了有效的地址信息:
-							//即，result.regeocode.formattedAddress
-							// console.log(result.regeocode.formattedAddress)
 							let addr = getAddr(result.regeocode.formattedAddress)
 							addr = addr[0] + addr[1]
 							alert('已更新地址为：' + addr)
 							window.localStorage.setItem('city', addr)
 						} else {
 							//获取地址失败
-							console.info('图形左点击:获取地址失败')
+							message.error('图形点击:获取地址失败', 0.7)
 						}
 					})
 				})
@@ -62,7 +59,6 @@ class MapClass extends React.Component {
 			</div>
 		)
 	}
-
 }
 
 export default MapClass

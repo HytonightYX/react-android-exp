@@ -12,3 +12,10 @@ export const LIFE_STYLE = {
 	drsg: '穿衣指数',
 	flu:'感冒指数',
 }
+
+export const CITY_IMAGE = [
+	{name: '杭州', image: 'hangzhou.jpg'},
+	{name: '222', image: '222.jpg'},
+	{name: '333', image: '333.jpg'},
+	{name: '444', image: '444.jpg'},
+]

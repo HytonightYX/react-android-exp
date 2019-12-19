@@ -67,6 +67,13 @@ class Setting extends React.Component {
 		})
 	}
 
+	doLogOut = () => {
+		message.success('已登出')
+		window.localStorage.setItem('login', '0')
+		window.localStorage.setItem('rem', '0')
+		this.props.history.push('/')
+	}
+
 	render() {
 		const {confirmLoading, rem, user} = this.state
 		const {getFieldDecorator} = this.props.form
@@ -88,7 +95,7 @@ class Setting extends React.Component {
 				</div>
 
 				<div className="m-group">
-					<div className="m-menu"><span className="sn">默认城市设置</span><span className="sr">{getAddr(window.localStorage.getItem('city'))}</span></div>
+					<div className="m-menu" onClick={() => this.props.history.push('/app/map')}><span className="sn">默认城市设置</span><span className="sr">{getAddr(window.localStorage.getItem('city'))}</span></div>
 					<div className="m-menu"><span className="sn">历史天气显示</span><span className="sr">7天</span></div>
 				</div>
 
@@ -97,7 +104,7 @@ class Setting extends React.Component {
 						<span className="sn">下次自动登录</span>
 						<span className="sr">{rem ? '已开启' : '已关闭'}</span>
 					</div>
-					<div className="m-menu" onClick={this.doLogout}>退出登录</div>
+					<div className="m-menu" onClick={this.doLogOut}>退出登录</div>
 				</div>
 
 				<Modal
@@ -124,14 +131,14 @@ class Setting extends React.Component {
 									}
 								],
 								initialValue: ''
-							})(<Input className="input-text" placeholder="请输入初始密码..."/>)}
+							})(<Input type="password" className="input-text" placeholder="请输入初始密码..."/>)}
 						</Form.Item>
 
 						<Form.Item label="新密码">
 							{getFieldDecorator('new_password', {
 								rules: [{required: true, message: '请输入新密码！'}],
 								initialValue: ''
-							})(<Input className="input-text" placeholder="请输入新密码..."/>)}
+							})(<Input type="password" className="input-text" placeholder="请输入新密码..."/>)}
 						</Form.Item>
 					</Form>
 				</Modal>
