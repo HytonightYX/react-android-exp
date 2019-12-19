@@ -2,6 +2,7 @@ import { Form, Input, Modal, Select, message, Icon } from 'antd'
 import React from 'react'
 import './style.less'
 import { getUserData } from '../../util/ls-helper'
+import { getAddr } from '../../util/reg-helper'
 
 const {Option} = Select
 
@@ -87,7 +88,7 @@ class Setting extends React.Component {
 				</div>
 
 				<div className="m-group">
-					<div className="m-menu"><span className="sn">默认城市设置</span><span className="sr">杭州</span></div>
+					<div className="m-menu"><span className="sn">默认城市设置</span><span className="sr">{getAddr(window.localStorage.getItem('city'))}</span></div>
 					<div className="m-menu"><span className="sn">历史天气显示</span><span className="sr">7天</span></div>
 				</div>
 

@@ -15,6 +15,7 @@ require('promise.prototype.finally').shim()
 window.localStorage.setItem('username', 'a')
 window.localStorage.setItem('password', 'a')
 window.localStorage.setItem('desc', '这位高人尚未留下自我介绍')
+window.localStorage.setItem('city', '浙江省杭州市')
 
 ReactDOM.render(
 	<Provider {...stores}>

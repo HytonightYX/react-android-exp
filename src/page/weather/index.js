@@ -1,11 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 import './style.less'
+import { getAddr } from '../../util/reg-helper'
 import qrcode from './qrcode.png'
 import { LIFE_STYLE } from '../../constant/data'
-import { message, Collapse, Tag, Icon, Modal, Form, Input, Checkbox, Button, Tabs } from 'antd'
+import { message, Tabs } from 'antd'
 
-const {Panel} = Collapse
 const {TabPane} = Tabs
 
 class Weather extends React.Component {
@@ -25,8 +25,13 @@ class Weather extends React.Component {
 	}
 
 	async componentDidMount() {
-		this.setState({loading: true})
-		const r = await axios.get(`https://free-api.heweather.net/s6/weather/forecast?location=${this.state.loc}&key=0dd213c6299e4c0ca233320dc0984ad9`)
+		const addr = getAddr(window.localStorage.getItem('city'))
+		this.setState({
+			loading: true,
+			loc: addr[1]
+		})
+
+		const r = await axios.get(`https://free-api.heweather.net/s6/weather/forecast?location=${addr[1]}&key=0dd213c6299e4c0ca233320dc0984ad9`)
 		if (r && r.status === 200 && r.data && r.data.HeWeather6[0].status === 'ok') {
 			const data = r.data.HeWeather6[0]
 			delete data.status
