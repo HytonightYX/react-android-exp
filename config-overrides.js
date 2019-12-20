@@ -5,9 +5,10 @@ const {
 	addDecoratorsLegacy,
 	disableEsLint,
 	addWebpackAlias,
-	addWebpackExternals
+	addWebpackExternals,
+	addBundleVisualizer
 } = require('customize-cra')
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const path = require('path')
 
 module.exports = override(
@@ -31,6 +32,8 @@ module.exports = override(
 		'@component': path.resolve(__dirname, 'src/component'),
 	}),
 	addWebpackExternals({
-		'AMap':'AMap'
-	})
+		'AMap':'AMap',
+		"echarts": "echarts"
+	}),
+	addBundleVisualizer({generateStatsFile: true})
 )

@@ -5,6 +5,7 @@ import React from 'react'
 import axios from 'axios'
 import ReactEcharts from 'echarts-for-react'
 import './style.less'
+import { getAddr } from '../../util/reg-helper'
 
 const {Panel} = Collapse
 
@@ -17,13 +18,9 @@ class History extends React.Component {
 		option: null
 	}
 
-	@computed
-	get city() {
-		return this.props.main.city
-	}
-
 	async componentDidMount() {
-		const r = await axios.get(`https://free-api.heweather.net/s6/weather/forecast?location=${this.city}&key=0dd213c6299e4c0ca233320dc0984ad9`)
+		const addr = getAddr(window.localStorage.getItem('city'))
+		const r = await axios.get(`https://free-api.heweather.net/s6/weather/forecast?location=${addr[1]}&key=0dd213c6299e4c0ca233320dc0984ad9`)
 		if (r && r.status === 200) {
 			const history = r.data.HeWeather6[0].daily_forecast
 			window.localStorage.setItem('history', JSON.stringify(history))
