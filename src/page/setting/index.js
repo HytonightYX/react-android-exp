@@ -145,7 +145,6 @@ class Setting extends React.Component {
 			</div>
 		)
 	}
-
 }
 
 export default Setting

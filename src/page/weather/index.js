@@ -5,6 +5,8 @@ import { getAddr } from '../../util/reg-helper'
 import qrcode from './qrcode.png'
 import { LIFE_STYLE } from '../../constant/data'
 import { message, Tabs } from 'antd'
+import hznu from './hznu.jpg'
+import QRCode from 'qrcode.react'
 
 const {TabPane} = Tabs
 
@@ -166,7 +168,13 @@ class Weather extends React.Component {
 						<TabPane tab="推荐" key="2">
 							<div className="m-recommend">
 								<div className="qrcode-wrap">
-									<img src={qrcode} alt=""/>
+
+									<QRCode value="http://hznu.edu.cn" imageSettings={{
+										src: hznu,
+										height: 40,
+										width: 40
+									}}/>
+
 								</div>
 
 								<div className="life-wrap">
